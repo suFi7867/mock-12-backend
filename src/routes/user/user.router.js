@@ -34,6 +34,9 @@ app.post("/login", async (req, res) => {
  
    const User = await UserModel.findOne({ email });
    let username = User.username
+   let date = new Date().toLocaleDateString("de-DE");
+   let time =  new Date().toLocaleTimeString();
+   
   // console.log(User)
   // if (!User) return res.status(404).send("User Not Found");
  
@@ -64,10 +67,13 @@ app.post("/login", async (req, res) => {
            expiresIn: "28 days",
          }
        );
+
+       console.log(date
+        ,time)
      
        return res
          .status(200)
-         .send({ message: "Login success", token, refresh_token, email,username  });
+         .send({ message: "Login success", token, refresh_token, email,username, time : `Date : ${date} , Time : ${time}` });
      } else {
        return res.status(401).send({ message: "Authentication Failed" });
      }
@@ -116,6 +122,47 @@ app.post("/signup", async (req, res) => {
       .send({ message: "Signup success"});
 
     });
+  } catch (er) {
+
+    return res.status(404).send(er.message);
+  }
+  
+});
+
+// Calculate 
+
+
+
+app.post("/calculate", async (req, res) => {
+  const {
+    InvestmentAmount, 
+    TimePeriod,
+  } = req.body;
+
+  console.log(req.body)
+ 
+  try {
+
+    let P = InvestmentAmount ;
+    let i = 7.1 / 100 ;
+    let n = TimePeriod ;
+
+    let  MaturityValue = (P * (Math.pow(1 + i, n) - 1) / i).toFixed();
+
+    // Total Investment Amount = Annual Instalment Amount * Total No. of Years
+    let TOTALInvestmentAmount = (n*P).toFixed()
+
+   // Total Interest Gained = Total Maturity Value - Total Investment Amount
+   let InterestGained = (MaturityValue - TOTALInvestmentAmount).toFixed()
+   
+   console.log(MaturityValue,  TOTALInvestmentAmount, InterestGained)
+    
+    
+      return res
+        .status(403)
+        .send({ message: "Calculate success" });
+    
+    
   } catch (er) {
 
     return res.status(404).send(er.message);
