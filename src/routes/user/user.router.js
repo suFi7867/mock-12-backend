@@ -155,12 +155,12 @@ app.post("/calculate", async (req, res) => {
    // Total Interest Gained = Total Maturity Value - Total Investment Amount
    let InterestGained = (MaturityValue - TOTALInvestmentAmount).toFixed()
    
-   console.log(MaturityValue,  TOTALInvestmentAmount, InterestGained)
+   //console.log(MaturityValue,  TOTALInvestmentAmount, InterestGained)
     
     
       return res
-        .status(403)
-        .send({ message: "Calculate success" });
+        .status(201)
+        .send({ message: "Calculate success", MaturityValue, TOTALInvestmentAmount, InterestGained  });
     
     
   } catch (er) {
