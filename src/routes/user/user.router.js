@@ -33,6 +33,7 @@ app.post("/login", async (req, res) => {
    }
  
    const User = await UserModel.findOne({ email });
+   let username = User.username
   // console.log(User)
   // if (!User) return res.status(404).send("User Not Found");
  
@@ -66,7 +67,7 @@ app.post("/login", async (req, res) => {
      
        return res
          .status(200)
-         .send({ message: "Login success", token, refresh_token, email });
+         .send({ message: "Login success", token, refresh_token, email,username  });
      } else {
        return res.status(401).send({ message: "Authentication Failed" });
      }
@@ -116,6 +117,7 @@ app.post("/signup", async (req, res) => {
 
     });
   } catch (er) {
+
     return res.status(404).send(er.message);
   }
   

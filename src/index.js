@@ -27,5 +27,5 @@ app.listen(PORT, async () => {
 });
   
 
-console.log("ss")
+
  //npm i argon2 bcrypt cors dotenv express jsonwebtoken mongoose nodemon
